@@ -135,8 +135,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AboutController.cs" />
-    <Compile Include="Controllers\ControllerBase.cs" />
+    <Compile Include="Controllers\Api\BaseApiController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Api\PeopleController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Models\PersonAppContext.cs" />
     <Compile Include="Models\Person.cs" />
@@ -176,6 +178,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Person\Details.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\PersonSearch.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
