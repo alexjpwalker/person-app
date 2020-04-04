@@ -8,9 +8,8 @@
 <table>
     <thead>
         <tr>
-            <th>ID (probably shouldn't tell you this)</th>
-            <th>First name</th>
-            <th>Last name</th>
+            <th>ID</th>
+            <th>Name</th>
             <th>Group name</th>
             <th>Date added</th>
         </tr>
@@ -20,8 +19,7 @@
         {
             <tr>
                 <td>@person.Id</td>
-                <td>@person.FirstName</td>
-                <td>@person.LastName</td>
+                <td>@Html.ActionLink(person.FullName, $"Details/{person.Id}")</td>
                 <td>@person.PersonGroup.Name</td>
                 <td>@person.CreatedDate</td>
             </tr>
