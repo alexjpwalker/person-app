@@ -16,7 +16,7 @@ namespace PersonApp
             routes.MapRoute(
                 name: "ControllerAndAction",
                 url: "{controller}/{action}",
-                defaults: new { controller = "Person", action = "Index" }
+                defaults: new { controller = "Home", action = "Index" }
             );
 
             routes.MapRoute(
