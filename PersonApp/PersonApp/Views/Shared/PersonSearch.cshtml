@@ -1,0 +1,70 @@
+﻿<div class="person-search">
+    <input id="personSearch" type="text" value="" />
+    <img class="person-search-icon" src="~/Content/search.svg" />
+    @Html.Partial("PersonSearchResultsPane", new { InitialState = true })
+</div>
+
+<script type="text/javascript">
+    function getSearchBox() {
+        return document.getElementById("personSearch");
+    }
+
+    function getResultsPane() {
+        return document.getElementById("personSearchResults");
+    }
+
+    function showResultsPane() {
+        getResultsPane().style.display = "block";
+    }
+
+    function hideResultsPane() {
+        getResultsPane().style.display = "none";
+    }
+
+    function shouldHideResultsPane() {
+        return !document.activeElement || (
+            !getSearchBox().contains(document.activeElement)
+            && !getResultsPane().contains(document.activeElement));
+    }
+
+    function updateResultsPane(query) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", `/Person/Search?query=${query}`);
+        xhr.send();
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState != XMLHttpRequest.DONE) {
+                return;
+            }
+            getResultsPane().outerHTML = xhr.responseText;
+        };
+    }
+
+    let updateViewTimeout = null;
+    const searchBox = getSearchBox();
+    searchBox.addEventListener("focus", (e) => {
+        showResultsPane();
+    });
+    searchBox.addEventListener("blur", (e) => {
+        setTimeout(() => {
+            if (shouldHideResultsPane()) {
+                hideResultsPane();
+            }
+        }, 100);
+    });
+    getResultsPane().addEventListener("blur", (e) => {
+        setTimeout(() => {
+            if (shouldHideResultsPane()) {
+                hideResultsPane();
+            }
+        }, 100);
+    });
+    searchBox.addEventListener("input", (e) => {
+        const query = e.target.value;
+        if (updateViewTimeout) {
+            clearTimeout(updateViewTimeout);
+        }
+        updateViewTimeout = setTimeout(() => {
+            updateResultsPane(query);
+        }, 300);
+    });
+</script>

@@ -8,14 +8,13 @@
     @Styles.Render("~/Content/css")
 </head>
 <body>
-    <nav>
-        <div class="navbar-collapse collapse">
-            <ul>
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("Our people", "Index", "Person")</li>
-                <li>@Html.ActionLink("About us", "Index", "About")</li>
-            </ul>
-        </div>
+    <nav class="navbar">
+        <ul>
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Our people", "Index", "Person")</li>
+            <li>@Html.ActionLink("About us", "Index", "About")</li>
+        </ul>
+        @Html.Partial("PersonSearch")
     </nav>
     <div class="container body-content">
         @RenderBody()

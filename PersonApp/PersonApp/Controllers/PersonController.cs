@@ -1,4 +1,5 @@
 ﻿using PersonApp.Models;
+using PersonApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -37,6 +38,25 @@ namespace PersonApp.Controllers
             }
 
             return View(person);
+        }
+        
+        public async Task<ActionResult> Search(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return PartialView("PersonSearchResultsPane", new PersonSearchResultsPaneViewModel
+                {
+                    InitialState = true
+                });
+            }
+
+            var people = await Context.People
+                .Where(p => p.FirstName.Contains(query.Trim()) || p.LastName.Contains(query.Trim()))
+                .ToListAsync();
+            return PartialView("PersonSearchResultsPane", new PersonSearchResultsPaneViewModel
+            {
+                People = people
+            });
         }
     }
 }
