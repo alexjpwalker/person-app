@@ -11,8 +11,8 @@ DECLARE @g3 INT = (SELECT Id FROM dbo.PersonGroup WHERE Name = 'Group 3')
 INSERT INTO dbo.Person (FirstName, LastName, PersonGroupId)
 VALUES ('Graham', 'Chapman', @g1),
        ('John', 'Cleese', @g2),
-	   ('Terry', 'Gilliam', @g3),
-	   ('Terry', 'Jones', @g1),
-	   ('Eric', 'Idle', @g2),
-	   ('Michael', 'Palin', @g2)
+       ('Terry', 'Gilliam', @g3),
+       ('Terry', 'Jones', @g1),
+       ('Eric', 'Idle', @g2),
+       ('Michael', 'Palin', @g2)
 GO

@@ -1,9 +1,9 @@
 IF DB_ID('CrunchyFrog') IS NOT NULL
 BEGIN
-	EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'CrunchyFrog'
-	use [master];
-	ALTER DATABASE [CrunchyFrog] SET  SINGLE_USER WITH ROLLBACK IMMEDIATE
-	DROP DATABASE [CrunchyFrog]
+    EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'CrunchyFrog'
+    use [master];
+    ALTER DATABASE [CrunchyFrog] SET  SINGLE_USER WITH ROLLBACK IMMEDIATE
+    DROP DATABASE [CrunchyFrog]
 END
 GO
 
@@ -26,43 +26,43 @@ GO
 /* Table name is the type of object stored in the table (a group of people), not pluralized.
 I call it PersonGroup because 'Group' could rapidly become ambiguous as we add new tables. */
 CREATE TABLE dbo.PersonGroup (
-	/*
-		- Id: All table primary keys will be named Id for consistency.
-		- INT: lightweight (hence performant) and I'm not expecting us to have 2 billion PersonGroups anytime soon.
-		- IDENTITY(1,1): allows us to "blindly" INSERT without needing to know about the existing data.
-	*/
-	Id INT IDENTITY(1,1) NOT NULL,
-	/*
-		- VARCHAR(50): VARCHAR instead of CHAR because we expect names to be "up to 50 characters", not "exactly 50 characters".
-		VARCHAR instead of NVARCHAR because we don't really need Unicode.
-		- UQ_PersonGroup_Name: [constraint type]_[table]_[column] by convention with UQ meaning UNIQUE
-	*/
-	Name VARCHAR(50) NOT NULL CONSTRAINT UQ_PersonGroup_Name UNIQUE,
-	/*
-		- CreatedDate: [action] + 'Date' for a date column (to describe it & make clear that it is a date)
-		- DATETIME2: general purpose object that can represent pretty well any date we'd care about. DEFAULT is the insertion date.
-		- GETDATE: the insertion date. By specifying this default, we can write INSERT queries without specifying CreatedDate.
-	*/
-	CreatedDate DATETIME2 NOT NULL CONSTRAINT DF_PersonGroup_CreatedDate DEFAULT GETDATE(),
+    /*
+        - Id: All table primary keys will be named Id for consistency.
+        - INT: lightweight (hence performant) and I'm not expecting us to have 2 billion PersonGroups anytime soon.
+        - IDENTITY(1,1): allows us to "blindly" INSERT without needing to know about the existing data.
+    */
+    Id INT IDENTITY(1,1) NOT NULL,
+    /*
+        - VARCHAR(50): VARCHAR instead of CHAR because we expect names to be "up to 50 characters", not "exactly 50 characters".
+        VARCHAR instead of NVARCHAR because we don't really need Unicode.
+        - UQ_PersonGroup_Name: [constraint type]_[table]_[column] by convention with UQ meaning UNIQUE
+    */
+    Name VARCHAR(50) NOT NULL CONSTRAINT UQ_PersonGroup_Name UNIQUE,
+    /*
+        - CreatedDate: [action] + 'Date' for a date column (to describe it & make clear that it is a date)
+        - DATETIME2: general purpose object that can represent pretty well any date we'd care about. DEFAULT is the insertion date.
+        - GETDATE: the insertion date. By specifying this default, we can write INSERT queries without specifying CreatedDate.
+    */
+    CreatedDate DATETIME2 NOT NULL CONSTRAINT DF_PersonGroup_CreatedDate DEFAULT GETDATE(),
 
-	/* Primary key ensures records are unique and can be the target of JOIN queries and performant foreign keys. I give every table a primary key. */
-	CONSTRAINT PK_PersonGroup_Id PRIMARY KEY (Id),
+    /* Primary key ensures records are unique and can be the target of JOIN queries and performant foreign keys. I give every table a primary key. */
+    CONSTRAINT PK_PersonGroup_Id PRIMARY KEY (Id),
 )
 GO
 
 CREATE TABLE dbo.Person (
-	Id INT IDENTITY(1,1) NOT NULL,
-	FirstName VARCHAR(50) NOT NULL,
-	LastName VARCHAR(50) NOT NULL,
-	CreatedDate DATETIME2 NOT NULL CONSTRAINT DF_Person_CreatedDate DEFAULT GETDATE(),
+    Id INT IDENTITY(1,1) NOT NULL,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    CreatedDate DATETIME2 NOT NULL CONSTRAINT DF_Person_CreatedDate DEFAULT GETDATE(),
 
-	/* For a foreign key relation, we use the foreign table name + 'Id'. */
-	PersonGroupId INT NOT NULL,
+    /* For a foreign key relation, we use the foreign table name + 'Id'. */
+    PersonGroupId INT NOT NULL,
 
-	CONSTRAINT PK_Person_Id PRIMARY KEY (Id),
+    CONSTRAINT PK_Person_Id PRIMARY KEY (Id),
 
-	/* Ensure that each Person is mapped to a genuine PersonGroup, and also block PersonGroups from being deleted when they have People */
-	CONSTRAINT FK_Person_PersonGroup FOREIGN KEY (PersonGroupId) REFERENCES dbo.PersonGroup (Id)
+    /* Ensure that each Person is mapped to a genuine PersonGroup, and also block PersonGroups from being deleted when they have People */
+    CONSTRAINT FK_Person_PersonGroup FOREIGN KEY (PersonGroupId) REFERENCES dbo.PersonGroup (Id)
 )
 GO
 
@@ -79,8 +79,8 @@ DECLARE @g3 INT = (SELECT Id FROM dbo.PersonGroup WHERE Name = 'Group 3')
 INSERT INTO dbo.Person (FirstName, LastName, PersonGroupId)
 VALUES ('Graham', 'Chapman', @g1),
        ('John', 'Cleese', @g2),
-	   ('Terry', 'Gilliam', @g3),
-	   ('Terry', 'Jones', @g1),
-	   ('Eric', 'Idle', @g2),
-	   ('Michael', 'Palin', @g2)
+       ('Terry', 'Gilliam', @g3),
+       ('Terry', 'Jones', @g1),
+       ('Eric', 'Idle', @g2),
+       ('Michael', 'Palin', @g2)
 GO
