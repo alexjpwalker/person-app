@@ -136,6 +136,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Models\PersonAppContext.cs" />
     <Compile Include="Models\Person.cs" />
