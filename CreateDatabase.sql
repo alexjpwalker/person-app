@@ -1,4 +1,10 @@
-DROP DATABASE IF EXISTS CrunchyFrog
+IF DB_ID('CrunchyFrog') IS NOT NULL
+BEGIN
+	EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'CrunchyFrog'
+	use [master];
+	ALTER DATABASE [CrunchyFrog] SET  SINGLE_USER WITH ROLLBACK IMMEDIATE
+	DROP DATABASE [CrunchyFrog]
+END
 GO
 
 /* Memorable database name. */
