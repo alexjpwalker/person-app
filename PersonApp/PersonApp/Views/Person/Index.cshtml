@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "People";
+}
+
+<p>There are @Model.Count people. Let me introduce them to you.</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID (probably shouldn't tell you this)</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Group name</th>
+            <th>Date added</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (PersonApp.Models.Person person in Model)
+        {
+            <tr>
+                <td>@person.Id</td>
+                <td>@person.FirstName</td>
+                <td>@person.LastName</td>
+                <td>@person.PersonGroup.Name</td>
+                <td>@person.CreatedDate</td>
+            </tr>
+        }
+    </tbody>
+</table>
