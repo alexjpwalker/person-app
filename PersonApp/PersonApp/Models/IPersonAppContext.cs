@@ -7,6 +7,7 @@ using System.Web;
 
 namespace PersonApp.Models
 {
+    // Naming convention for C# interfaces: the thing they describe, prefixed with the letter 'I'.
     public interface IPersonAppContext
     {
         IDbSet<PersonGroup> PersonGroups { get; }
