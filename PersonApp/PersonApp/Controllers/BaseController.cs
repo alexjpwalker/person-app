@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace PersonApp.Controllers
 {
+    // Most of our controllers will need database access. Creating a BaseController allows us to provide it easily and consistently.
     public abstract class BaseController : Controller
     {
         protected IPersonAppContext Context => _context;

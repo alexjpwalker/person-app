@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 
+/* We don't currently make use of this Web API, but we probably should. */
 namespace PersonApp.Controllers.Api
 {
     [RoutePrefix("api/people")]
@@ -36,7 +37,6 @@ namespace PersonApp.Controllers.Api
         public async Task<List<Person>> Search([FromUri(Name = "q")] string query)
         {
             // Note: This is not a very efficient lookup.
-#warning May be case sensitive depending on implementation of Contains
             var people = await Context.People
                 .Where(p => p.FirstName.Contains(query) || p.LastName.Contains(query))
                 .ToListAsync();
