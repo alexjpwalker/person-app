@@ -24,6 +24,10 @@ namespace PersonApp
                 url: "{controller}/{action=Details}/{id}",
                 defaults: new { controller = "Person", action = "Details", id = 0 }
             );
+
+            routes.MapRoute(
+                name: "CreatePage",
+                url: "{controller}/{action=Create}");
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace PersonApp.Models
@@ -10,5 +11,8 @@ namespace PersonApp.Models
     {
         IDbSet<PersonGroup> PersonGroups { get; }
         IDbSet<Person> People { get; }
+
+        int SaveChanges();
+        Task<int> SaveChangesAsync();
     }
 }

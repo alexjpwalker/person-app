@@ -58,5 +58,39 @@ namespace PersonApp.Controllers
                 People = people
             });
         }
+
+        [HttpGet]
+        public async Task<ActionResult> Create()
+        {
+            var groups = await Context.PersonGroups.ToListAsync();
+            return View("Create", new CreatePersonViewModel
+            {
+                Groups = groups,
+                FirstName = "",
+                LastName = ""
+            });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Create(CreatePersonViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var groups = await Context.PersonGroups.ToListAsync();
+                model.Groups = groups;
+                return View("Create", model);
+            }
+
+            var person = new Person
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PersonGroupId = model.Group.Value
+            };
+
+            Context.People.Add(person);
+            await Context.SaveChangesAsync();
+            return View("Details", person);
+        }
     }
 }

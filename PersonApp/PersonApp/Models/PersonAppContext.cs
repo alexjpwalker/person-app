@@ -10,7 +10,6 @@ namespace PersonApp.Models
     {
         private PersonAppContext()
         {
-
         }
 
         public static PersonAppContext Instance => _instance;

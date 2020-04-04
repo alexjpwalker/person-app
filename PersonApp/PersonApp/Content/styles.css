@@ -72,3 +72,11 @@ dt {
 .search-results-pane ul li:not(:first-child) {
     border-top: 1px solid #aaa;
 }
+
+form fieldset {
+    border: none;
+}
+
+form fieldset > div + div {
+    margin-top: 0.5em;
+}

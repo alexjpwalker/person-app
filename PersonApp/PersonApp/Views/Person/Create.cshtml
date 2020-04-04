@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Create new person";
+}
+
+<h1>Create new person</h1>
+<form method="post">
+    <fieldset>
+        <div>
+            <label for="firstName">First name</label>
+            <input type="text" name="firstName" />
+        </div>
+        <div>
+            <label for="lastName">Last name</label>
+            <input type="text" name="lastName" />
+        </div>
+        <div>
+            <label for="group">Group</label>
+            <select name="group">
+                <option selected disabled>Please select...</option>
+                @foreach (PersonApp.Models.PersonGroup group in Model.Groups)
+                {
+                    <option value="@group.Id">@group.Name</option>
+                }
+            </select>
+        </div>
+        <div>
+            <input type="submit" value="Create" />
+        </div>
+    </fieldset>
+</form>
