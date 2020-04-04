@@ -18,6 +18,7 @@ namespace PersonApp.Models
         [JsonIgnore]
         public PersonGroup PersonGroup { get; set; }
         public int PersonGroupId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedDate { get; set; }
         [JsonIgnore]
         public string FullName => $"{FirstName} {LastName}";
