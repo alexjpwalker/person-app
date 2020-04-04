@@ -1,8 +1,10 @@
 ﻿using PersonApp.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -18,15 +20,20 @@ namespace PersonApp.Controllers
                 .ToListAsync();
             return View(people);
         }
-
-        [Route("{id}")]
-        public ActionResult Details(int id)
+        
+        public async Task<ActionResult> Details(int? id)
         {
-            var person = Context.People.SingleOrDefault(x => x.Id == id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var person = await Context.People.SingleOrDefaultAsync(x => x.Id == id);
             if (person == null)
             {
-                return View();
+                return new HttpNotFoundResult();
             }
+
             return View(person);
         }
     }

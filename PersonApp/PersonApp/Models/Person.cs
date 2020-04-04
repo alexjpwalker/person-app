@@ -17,5 +17,7 @@ namespace PersonApp.Models
         public PersonGroup PersonGroup { get; set; }
         public int PersonGroupId { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        public string FullName => $"{FirstName} {LastName}";
     }
 }
