@@ -10,6 +10,8 @@ namespace PersonApp
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
+            // Bundle stylesheets
+            // It doesn't provide much benefit right now, but it would if we had more stylesheets.
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/styles.css"));
         }
     }
