@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href="~/favicon.png" />
+    <title>@ViewBag.Title - Person App</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <nav class="navbar">
+        @Html.ActionLink("Home", "Index", "Person");
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>Person Database App</p>
+        </footer>
+    </div>
+</body>
+</html>
