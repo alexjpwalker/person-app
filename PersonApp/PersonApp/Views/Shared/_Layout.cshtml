@@ -8,12 +8,12 @@
     @Styles.Render("~/Content/css")
 </head>
 <body>
-    <nav class="navbar">
-        @Html.ActionLink("Home", "Index", "Person");
+    <nav>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+            <ul>
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Our people", "Index", "Person")</li>
+                <li>@Html.ActionLink("About us", "Index", "About")</li>
             </ul>
         </div>
     </nav>
@@ -21,7 +21,8 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>Person Database App</p>
+            <aside>Person Database App</aside>
+            <aside><em>All names in this database may or may not be purely fictional, and any relation to existing individuals may be either intentional or coincidental.</em></aside>
         </footer>
     </div>
 </body>
