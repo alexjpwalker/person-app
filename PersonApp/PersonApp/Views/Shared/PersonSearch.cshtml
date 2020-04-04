@@ -27,6 +27,7 @@
         getResultsPane().style.display = "none";
     }
 
+    // If the user focuses any element other than the search box, we should hide the results pane
     function shouldHideResultsPane() {
         return !document.activeElement || (
             !getSearchBox().contains(document.activeElement)
@@ -38,25 +39,32 @@
         xhr.open("GET", `/Person/Search?query=${query}`);
         xhr.send();
         xhr.onreadystatechange = () => {
+            // Wait for the request to be completed
             if (xhr.readyState != XMLHttpRequest.DONE) {
                 return;
             }
+            // Inject the HTML returned by the PersonController into the results pane
+            // Note: this could be done differently by getting People from the Web API and populating the results pane using JS
             getResultsContainer().innerHTML = xhr.responseText;
         };
     }
 
     let updateViewTimeout = null;
+    // Prefer storing search box to a variable for terseness
     const searchBox = getSearchBox();
+    // Prefer 'focus' instead of 'click' for accessibility (i.e: using TAB to navigate to the search box)
     searchBox.addEventListener("focus", (e) => {
         showResultsPane();
     });
     searchBox.addEventListener("blur", (e) => {
+        // Without setTimeout, the 'blur' event might trigger before a new element actually receives focus, which would make shouldHideResultsPane always return true.
         setTimeout(() => {
             if (shouldHideResultsPane()) {
                 hideResultsPane();
             }
         }, 100);
     });
+    // focusout allows a 'blur'-like event to be triggered when any child element loses focus, and the results container has children.
     getResultsContainer().addEventListener("focusout", (e) => {
         setTimeout(() => {
             if (shouldHideResultsPane()) {
@@ -66,6 +74,8 @@
     });
     searchBox.addEventListener("input", (e) => {
         const query = e.target.value;
+        // Debounce time of 300ms - i.e: don't update results until 300ms have passed with no further input
+        // This is to avoid bombarding the server with unnecessary requests
         if (updateViewTimeout) {
             clearTimeout(updateViewTimeout);
         }
