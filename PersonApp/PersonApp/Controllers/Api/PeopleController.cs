@@ -3,17 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace PersonApp.Controllers.Api
 {
+    [RoutePrefix("api/people")]
     public class PeopleController : BaseApiController
     {
         // GET api/people
         [HttpGet]
+        [Route("")]
         public async Task<List<Person>> Get()
         {
             var people = await Context.People.ToListAsync();
@@ -22,17 +22,34 @@ namespace PersonApp.Controllers.Api
 
         // GET api/people/7
         [HttpGet]
+        [Route("{id}")]
         public async Task<Person> Get(int id)
         {
             var person = await Context.People.SingleOrDefaultAsync(x => x.Id == id);
             return person;
         }
 
+        // GET api/people/search
+        // Example: GET api/people/search?q=john
+        [HttpGet]
+        [Route("search")]
+        public async Task<List<Person>> Search([FromUri(Name = "q")] string query)
+        {
+            // Note: This is not a very efficient lookup.
+#warning May be case sensitive depending on implementation of Contains
+            var people = await Context.People
+                .Where(p => p.FirstName.Contains(query) || p.LastName.Contains(query))
+                .ToListAsync();
+            return people;
+        }
+
         // POST api/people
         [HttpPost]
-        public Person Post([FromBody] Person person)
+        [Route("")]
+        public IHttpActionResult Post([FromBody] Person person)
         {
-            return Context.People.Add(person);
+            var p = Context.People.Add(person);
+            return Created($"api/people/{p.Id}", p);
         }
     }
 }

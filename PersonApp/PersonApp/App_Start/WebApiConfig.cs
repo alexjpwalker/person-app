@@ -26,12 +26,23 @@ namespace PersonApp
             // Enable attribute routing
             config.MapHttpAttributeRoutes();
 
-            // Use standard API route syntax
+            /* // Basic REST methods: get/update/delete by id
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                name: "ById",
+                routeTemplate: "api/{controller}/{id:int}"
             );
+
+            // Custom controller actions
+            config.Routes.MapHttpRoute(
+                name: "CustomActions",
+                routeTemplate: "api/{controller}/{action}"
+            );
+
+            // Basic REST method: get all
+            config.Routes.MapHttpRoute(
+                name: "GetAll",
+                routeTemplate: "api/{controller}"
+            ); */
         }
     }
 }
