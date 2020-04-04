@@ -1,7 +1,9 @@
 ﻿<div class="person-search">
     <input id="personSearch" type="text" value="" />
     <img class="person-search-icon" src="~/Content/search.svg" />
-    @Html.Partial("PersonSearchResultsPane", new { InitialState = true })
+    <div id="personSearchResults" class="search-results-container" tabindex="0">
+        @Html.Partial("PersonSearchResultsPane", new { InitialState = true })
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -9,8 +11,12 @@
         return document.getElementById("personSearch");
     }
 
-    function getResultsPane() {
+    function getResultsContainer() {
         return document.getElementById("personSearchResults");
+    }
+
+    function getResultsPane() {
+        return document.getElementById("personSearchResultsPane");
     }
 
     function showResultsPane() {
@@ -24,7 +30,7 @@
     function shouldHideResultsPane() {
         return !document.activeElement || (
             !getSearchBox().contains(document.activeElement)
-            && !getResultsPane().contains(document.activeElement));
+            && !getResultsContainer().contains(document.activeElement));
     }
 
     function updateResultsPane(query) {
@@ -35,7 +41,7 @@
             if (xhr.readyState != XMLHttpRequest.DONE) {
                 return;
             }
-            getResultsPane().outerHTML = xhr.responseText;
+            getResultsContainer().innerHTML = xhr.responseText;
         };
     }
 
@@ -51,7 +57,7 @@
             }
         }, 100);
     });
-    getResultsPane().addEventListener("blur", (e) => {
+    getResultsContainer().addEventListener("focusout", (e) => {
         setTimeout(() => {
             if (shouldHideResultsPane()) {
                 hideResultsPane();
