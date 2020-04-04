@@ -2,10 +2,17 @@
     ViewBag.Title = Model.FullName;
 }
 
+<h1>Person Profile: @Model.FullName</h1>
 <dl>
     <dt>First name</dt>
     <dd>@Model.FirstName</dd>
 
     <dt>Last name</dt>
     <dd>@Model.LastName</dd>
+
+    <dt>Group name</dt>
+    <dd>@Model.PersonGroup.Name</dd>
+
+    <dt>Created at</dt>
+    <dd>@Model.CreatedDate</dd>
 </dl>

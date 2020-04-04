@@ -28,7 +28,9 @@ namespace PersonApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var person = await Context.People.SingleOrDefaultAsync(x => x.Id == id);
+            var person = await Context.People
+                .Include(p => p.PersonGroup)
+                .SingleOrDefaultAsync(x => x.Id == id);
             if (person == null)
             {
                 return new HttpNotFoundResult();
