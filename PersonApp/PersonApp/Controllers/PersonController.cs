@@ -60,6 +60,8 @@ namespace PersonApp.Controllers
             }
 
             // Note: This is not a very efficient lookup.
+            // Contains can be converted by EF to SQL, so it is executed on the database and not in memory.
+            // This vastly improves performance on large databases by not requiring the whole table to be downloaded into memory.
 #warning May be case sensitive depending on implementation of Contains
             var people = await Context.People
                 .Where(p => p.FirstName.Contains(query.Trim()) || p.LastName.Contains(query.Trim()))
